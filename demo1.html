@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>懒加载</title>
+</head>
+<body>
+
+<script>
+    var container = document.createElement("div");
+    
+    for(var i = 1; i<=12; i++){
+        var img = document.createElement("img");
+        
+        img.setAttribute("src", "images/loading.gif");
+        
+        img.setAttribute("data-src","images/"+ i +".jpg");
+        
+        img.setAttribute("style","height:350px;width:800px");
+        
+        container.appendChild(img);
+    }
+    
+    document.body.append(container);
+    
+    window.addEventListener("scroll",showImages,false);
+    
+    var imgArr = Array.prototype.slice.call(document.images,0); 
+    function showImages(){
+        var scrollTop = document.documentElement.scrollTop;
+        var clientHeight = document.documentElement.clientHeight
+        
+        imgArr.forEach(function(image){
+            if(image.offsetTop <= (scrollTop+clientHeight)){
+                image.setAttribute("src",image.dataset.src);
+               }
+        });
+        
+    }
+    
+</script>
+    
+<script>
+//    var container = document.createElement('div');
+//    // 文档片段
+//    var frag = document.createDocumentFragment();
+//
+//    // 动态生成图片
+//    for (var i = 1; i <= 12; i++) {
+//        var img = document.createElement('img');
+//
+//        // 设置统一的占位图片
+//        img.setAttribute('src', 'images/loading.gif');
+//
+//        // 将真实的图片保存到自定义属性中
+//        img.setAttribute('data-src', 'images/'+i+'.jpg');
+//
+//        img.setAttribute('style', 'width: 600px;height: 350px;margin:5px;');
+//
+//        // 先将图片添加到文档片段中
+//        frag.appendChild(img);
+//    }
+//
+//    // 将文档片段添加到容器中
+//    container.appendChild(frag);
+//
+//    // 将容器添加到body中
+//    document.body.insertBefore(container, document.body.firstElementChild);
+//
+//    // 监听页面的滚动事件
+//    window.addEventListener('scroll', lazyLoaded,false);
+//    // 懒加载方法
+//    function lazyLoaded() {
+//        // 滚动高度
+//        var scrollTop = document.documentElement.scrollTop;
+//        // 可视区高度
+//        var cliendHeight = document.documentElement.clientHeight;
+//
+//        // 将所有图片转为数组
+//        var imgArr = Array.prototype.slice.call(document.images, 0);
+//        // var imgArr = Array.from(document.images);
+//
+//        imgArr.forEach(function (img) {
+//            // 图片顶部的距离如果小于可视区高度与可视区的滚动距离的话, 说明该图片进入到了可视区
+//            if (img.offsetTop  <= (scrollTop + cliendHeight)) {
+//                img.setAttribute('src', img.dataset.src);
+//            }
+//        });
+//
+//
+//    }
+//
+//
+//    window.addEventListener('load', lazyLoaded, false);
+</script>
+</body>
+</html>
